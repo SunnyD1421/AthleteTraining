@@ -1,0 +1,1 @@
+web: gunicorn AthleteTraining.wsgi --log-file -
