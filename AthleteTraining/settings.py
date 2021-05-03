@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import django_heroku
 import os.path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -150,3 +151,4 @@ STATICFILES_FINDERS = [
 
 LOGIN_REDIRECT_URL = '/'
 
+django_heroku.settings(locals(), staticfiles=False)
