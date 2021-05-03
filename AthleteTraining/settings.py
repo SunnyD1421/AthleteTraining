@@ -32,7 +32,7 @@ SECRET_KEY = '$yj@)1!hu-w14-kgqp-fd3@b)i@&%y7w()ux7lqhq-3z5u^1$('
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['dsund-baseball21.herokuapp.com']
+ALLOWED_HOSTS = ['dsund-baseballtraining.herokuapp.com']
 
 
 # Application definition
