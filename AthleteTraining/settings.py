@@ -19,7 +19,7 @@ PROJECT_ROOT = os.path.abspath(
     os.path.join(os.path.dirname(__file__), '..'))
     
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join('AthleteTraining/static'),
 )
 
 # Quick-start development settings - unsuitable for production
