@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
-import django_heroku
 import os.path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -32,7 +31,7 @@ SECRET_KEY = '$yj@)1!hu-w14-kgqp-fd3@b)i@&%y7w()ux7lqhq-3z5u^1$('
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['dsund-baseballtraining.herokuapp.com']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -151,9 +150,3 @@ STATICFILES_FINDERS = [
 
 
 LOGIN_REDIRECT_URL = '/'
-
-django_heroku.settings(locals(), staticfiles=False)
-
-import dj_database_url 
-prod_db  =  dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(prod_db)

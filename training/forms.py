@@ -1,6 +1,21 @@
 from django import forms
-from .models import Throwing, ThrowingDescription, ThrowingSchedule, User, ThrowPlans, LiftingDescription, LiftingSchedule, LiftPlans
+from django.contrib.auth.models import User, Group
+from .models import Location, Position, Throwing, ThrowingDescription, ThrowingSchedule, User, ThrowPlans, LiftingDescription, LiftingSchedule, LiftPlans, Athlete, Coach
 import datetime
+from django.contrib.auth.forms import UserCreationForm
+
+class CoachForm(forms.ModelForm):
+    location = forms.ModelChoiceField(queryset=Location.objects.all())
+    class Meta:
+        model = Coach
+        exclude = ('coach_user',)
+
+class AthleteForm(forms.ModelForm):
+    position = forms.ModelChoiceField(queryset=Position.objects.all())
+    location = forms.ModelChoiceField(queryset=Location.objects.all())
+    class Meta:
+        model = Athlete
+        exclude = ('ath_user',)
 
 class ThrowingForm(forms.ModelForm):
     throw_data = forms.JSONField()
@@ -74,3 +89,25 @@ class LiftPlanForm(forms.ModelForm):
     class Meta:
         model = LiftPlans
         fields = ('plan_name', 'lifts')
+
+class UserCreateForm(UserCreationForm):
+    usertype = forms.ChoiceField(choices=[('Athlete', 'Athlete'),('Coach', 'Coach')])
+    location = forms.ModelChoiceField(queryset=Location.objects.all())
+    position = forms.ModelChoiceField(queryset=Position.objects.all())
+
+    class Meta:
+        model = User
+        fields = ('username', 'first_name', 'last_name', 'email',)
+
+    def save(self, commit=True):
+        if not commit:
+            raise NotImplementedError("Can't create User and UserProfile without database save")
+        user = super(UserCreateForm, self).save()
+        if self.cleaned_data['usertype']=='Athlete':
+            userprofile = Athlete(ath_user=user, ath_location=self.cleaned_data['location'], ath_position=self.cleaned_data['position'])
+            user.groups.add(Group.objects.get(name='Athlete'))
+        elif self.cleaned_data['usertype']=='Coach':
+            userprofile = Coach(coach_location=self.cleaned_data['location'], coach_user=user)
+            user.groups.add(Group.objects.get(name='Coach'))
+        userprofile.save()
+        return user, userprofile

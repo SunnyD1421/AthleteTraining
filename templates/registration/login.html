@@ -59,8 +59,15 @@
               {% endif %}
           </div>
           {% endfor %}
-          <button type="submit" value="login" class="btn btn-primary">SUBMIT</button>
-          <input type="hidden" name="next" value="{{ next }}" />
+          <div class="row">
+            <div class="col">
+              <button type="submit" value="login" class="btn btn-primary">SUBMIT</button>
+              <input type="hidden" name="next" value="{{ next }}" />
+            </div>
+            <div class="col">
+              <a href="/signup/" class="btn btn-primary">Signup</a>
+            </div>
+          </div>
         </form>
       </div>
     </div>

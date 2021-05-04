@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login
 from django.http import HttpResponse
 from .models import ThrowingSchedule, Athlete, ThrowPlans, Throwing
-from .forms import ThrowingForm, ThrowDescForm, ThrowScheduleForm, ThrowPlanForm, LiftDescForm, LiftScheduleForm, LiftPlanForm
+from .forms import ThrowingForm, ThrowDescForm, ThrowScheduleForm, ThrowPlanForm, LiftDescForm, LiftScheduleForm, LiftPlanForm, UserCreateForm
 import datetime
 
 
@@ -19,6 +20,51 @@ def home(request):
         return redirect('/coach-dashboard')
     else:
         return render(request, 'training/home.html', context)
+
+def signup(request):
+    context = {
+        'title':'Signup'
+    }
+    if request.method == 'POST':
+        print(request.POST)
+        form = UserCreateForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get("password2")
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            redirect('/ProfileSetup/' + request.POST.get('usertype'))
+    else:
+        form = UserCreateForm()
+    context['form'] = form
+    return render(request, 'training/signup.html', context)
+
+def profileset(request, usertype):
+    context = {
+        'title':'Profile',
+        'user': request.user,
+    }
+    if usertype=="Athlete":
+        if request.method == 'POST':
+            form = AthleteForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect('')
+        else:
+            form =AthleteForm()
+        context['form'] = form
+        return render(request, 'training/profile.html', context)
+    elif usertype=="Coach":
+        if request.method == 'POST':
+            form = CoachForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect('')
+        else:
+            form = CoachForm()
+        context['form'] = form
+        return render(request, 'training/profile.html', context)
 
 def about(request):
     context = {
