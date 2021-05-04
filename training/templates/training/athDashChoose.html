@@ -1,0 +1,31 @@
+{% extends "training/baseAthlete.html" %}
+
+{% block content2 %}
+<div class="container-fluid">
+    <div class="row">
+        {% if throwschedule == None %}
+        <div class="col">
+            <div class="card" style="width: 25rem;">
+                <h3 class="display">There is no throwing on the schedule for today!</h3>
+            </div>
+        </div>
+        {% elif throwschedule != None %}
+        <div class="col">
+            <a href="/athlete-dashboard/throwDay/{{ year }}/{{ month }}/{{ day }}" class="btn btn-primary stretched-link">Throwing Plan</a>
+        </div>
+        {% endif %}
+        {% if liftschedule == None %}
+        <div class="col">
+            <div class="card" style="width: 25rem;">
+                <h3 class="display">There is no lifting on the schedule for today!</h3>
+            </div>
+        </div>
+        {% elif liftschedule != None %}
+        <div class="col">
+            <a href="/athlete-dashboard/liftDay/{{ year }}/{{ month }}/{{ day }}" class="btn btn-primary stretched-link">Lifting Plan</a>
+        </div>
+        {% endif %}
+    </div>
+    
+</div>
+{% endblock %}

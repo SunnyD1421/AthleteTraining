@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponse
-from .models import ThrowingSchedule, Athlete, ThrowPlans, Throwing
+from .models import ThrowingSchedule, LiftingSchedule, Athlete, ThrowPlans, Throwing, Lifting
 from .forms import ThrowingForm, ThrowDescForm, ThrowScheduleForm, ThrowPlanForm, LiftDescForm, LiftScheduleForm, LiftPlanForm, UserCreateForm
 import datetime
 
@@ -42,7 +42,7 @@ def about(request):
     }
     return render(request, 'training/about.html', context)
 
-def scheduleAth(request, year, month, day):
+def scheduleAththrow(request, year, month, day):
     d = datetime.date(year,month,day)
     throwing = Throwing(ath_user=request.user, throw_date=d)
     if not request.user.is_authenticated:
@@ -69,11 +69,44 @@ def scheduleAth(request, year, month, day):
         form = ThrowingForm(request.POST, instance=throwing)
         if form.is_valid():
             form.save()
-            return redirect("/athlete-dashboard/"+str(year)+"/"+str(month)+"/"+str(day))
+            return redirect("/athlete-dashboard/throwDay/"+str(year)+"/"+str(month)+"/"+str(day))
     else:
         form = ThrowingForm(instance=throwing)
     context['form'] = form
-    return render(request, 'training/scheduleAth.html', context)
+    return render(request, 'training/scheduleAththrow.html', context)
+
+def scheduleAthlift(request, year, month, day):
+    d = datetime.date(year,month,day)
+    lifting = Lifting(ath_user=request.user, lift_date=d)
+    if not request.user.is_authenticated:
+        return redirect('/accounts/login/')
+    elif not request.user.groups.filter(name='Athlete').exists():
+        return redirect('/')
+    elif LiftingSchedule.objects.filter(ath_user_id = request.user.id, date = d).first()==None:
+        return render(request, 'training/scheduleAthlift.html', {'athlete': request.user})
+    else:
+        liftSchedule = LiftingSchedule.objects.get(ath_user_id = request.user.id, date = d)
+        liftplan = LiftPlans.objects.get(plan_name = liftSchedule.plan)
+        context = {
+            'date': datetime.date(year,month,day),
+            'year': year,
+            'month': month,
+            'day': day,
+            'athlete': request.user,
+            'lift_data': Lifting.objects.filter(ath_user_id=request.user.id, lift_date=d),
+            'liftSchedule': liftSchedule, 
+            'liftplan': liftplan,
+    }
+    if request.method == 'POST':
+        d = datetime.date(year,month,day)
+        form = LiftingForm(request.POST, instance=lifting)
+        if form.is_valid():
+            form.save()
+            return redirect("/athlete-dashboard/liftDay/"+str(year)+"/"+str(month)+"/"+str(day))
+    else:
+        form = LiftingForm(instance=lifting)
+    context['form'] = form
+    return render(request, 'training/scheduleAthlift.html', context)
 
 def visualize(request):
     context = {
@@ -113,6 +146,28 @@ def athDash(request):
         return redirect('/coach-dashboard')
     else:
         return render(request, 'training/baseAthlete.html', context)
+
+def athDashChoose(request, year, month, day):
+    d = datetime.date(year,month,day)
+
+    context = {
+        'date': d,
+        'year': year,
+        'month': month,
+        'day': day,
+        'athlete': request.user,
+        'liftschedule': LiftingSchedule.objects.filter(ath_user_id=request.user.id, date=d).first(),
+        'throwschedule': ThrowingSchedule.objects.filter(ath_user_id=request.user.id, date=d).first(),
+    }
+    
+    if not request.user.is_authenticated:
+        return redirect('/accounts/login/')
+    elif request.user.groups.filter(name='Coach'):
+        return redirect('/coach-dashboard')
+    else:
+        print(LiftingSchedule.objects.filter(ath_user_id=request.user.id, date=d).first())
+        print(ThrowingSchedule.objects.filter(ath_user_id=request.user.id, date=d).first())
+        return render(request, 'training/athDashChoose.html', context)
 
 def coachDash(request):
     context = {

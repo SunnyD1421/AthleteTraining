@@ -1,0 +1,70 @@
+{% extends "training/baseAthlete.html" %}
+{% load widget_tweaks %}
+
+{% block content2 %}
+{% if liftSchedule == None %}
+    <div class="container">
+        <div class="card">
+            There is no lifting on the schedule for today!
+        </div>
+    </div>
+{% elif liftSchedule != None %}
+{% for lift in lift_data %}
+    <div class="container">
+        <div class="card">
+            <h3>You have already completed the lifting planned for {{lift.lift_date}}!</h3>
+        </div>
+    </div>
+{% empty  %}
+<div class="container-fluid">
+    <h1>The schedule for {{date}} is {{plan}}</h1>
+    <div class="row">
+        <div class="col">
+            <div class='card'>
+                <form id="throw-form">
+                    {% for exercise in liftplan.lifts.iterator %}
+                    
+                        <div class="col-2">
+                            <p>{{exercise}}</p>
+                        </div>
+                        {% if exercise.lift_type == "T" %}
+                        {% for set in exercise.setsToList  %}
+                        <div class="row">
+                            <div class="col-2">
+                                <p>Set {{set}}</p>
+                            </div>
+                            {% for rep in exercise.repsToList %}
+                            <div class="col-1">
+                                <p> Rep {{rep}}<p>
+                                <input type="number" name="{{exercise}}[Set-{{set}}][Rep-{{rep}}]:number" min="0" class="form-control" placeholder="weight">
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                    
+                    {% endfor %}
+                </form>
+            </div>
+            <form id="lift" method="POST">
+                {% csrf_token %}
+                <input type="hidden" id="result" name='lift_data'></input>
+                <button type="submit" id="subbut" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    $(function() {
+        $("#subbut").on("click", function() {
+            var obj = $('form').serializeJSON();
+            delete obj.csrfmiddlewaretoken;
+            delete obj.lift_data;
+            var jsonString = JSON.stringify(obj, null, 2);
+            $("#result").val(jsonString);
+        })
+        });
+</script>
+{% endfor %}
+{% endif %}
+{% endblock %}

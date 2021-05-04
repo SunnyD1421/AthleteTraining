@@ -10,7 +10,10 @@ urlpatterns = [
     path('visualize/throwing/', views.visualizeThrow, name='Training-visualizeThrow'),
     path('visualize/lifting/', views.visualizeLift, name='Training-visualizeLift'),
 
-    path('athlete-dashboard/<int:year>/<int:month>/<int:day>', views.scheduleAth, name='Training-Schedule'),
+    
+    path('athlete-dashboard/<int:year>/<int:month>/<int:day>/choose', views.athDashChoose, name='Training-AthleteDashboard-Choose'),
+    path('athlete-dashboard/throwDay/<int:year>/<int:month>/<int:day>', views.scheduleAththrow, name='Training-Schedule-Throw'),
+    path('athlete-dashboard/liftDay/<int:year>/<int:month>/<int:day>', views.scheduleAthlift, name='Training-Schedule-Lift'),
     path('athlete-dashboard/', views.athDash, name='Training-AthleteDashboard'),
     path('coach-dashboard/', views.coachDash, name='Training-CoachDashboard'),
     
