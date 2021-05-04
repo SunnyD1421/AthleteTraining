@@ -53,16 +53,16 @@ def scheduleAth(request, year, month, day):
         return render(request, 'training/scheduleAth.html', {'athlete': request.user})
     else:
         throwSchedule = ThrowingSchedule.objects.get(ath_user_id = request.user.id, date = d)
-        plan = ThrowPlans.objects.get(plan_name = throwSchedule.plan)
+        throwplan = ThrowPlans.objects.get(plan_name = throwSchedule.plan)
         context = {
-            'throw_data': Throwing.objects.filter(ath_user_id=request.user.id, throw_date=d),
             'date': datetime.date(year,month,day),
             'year': year,
             'month': month,
             'day': day,
             'athlete': request.user,
+            'throw_data': Throwing.objects.filter(ath_user_id=request.user.id, throw_date=d),
             'throwSchedule': throwSchedule, 
-            'plan': plan,
+            'throwplan': throwplan,
     }
     if request.method == 'POST':
         d = datetime.date(year,month,day)

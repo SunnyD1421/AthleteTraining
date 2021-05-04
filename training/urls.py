@@ -20,16 +20,7 @@ urlpatterns = [
     path('coach-dashboard/addLiftExercise/', views.editLiftdesc , name='Training-AddLift'),
     path('coach-dashboard/addLiftSchedule', views.editLiftschedule , name='Training-AddLiftSchedule'),
     path('coach-dashboard/addLiftPlan', views.editLiftplan , name='Training-AddLiftPlan'),
-
-    #Make URL/View/Template for:
-    # Lifting Exercises,Plans,Schedule
-
-    #Lifting Data Entry form and Template
-
-    # How am I going to visualize data.
     ]
-
-
 ## Login/Logout Django urls
 urlpatterns += [
         path('accounts/', include('django.contrib.auth.urls')),
