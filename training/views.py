@@ -5,9 +5,6 @@ from .models import ThrowingSchedule, Athlete, ThrowPlans, Throwing
 from .forms import ThrowingForm, ThrowDescForm, ThrowScheduleForm, ThrowPlanForm, LiftDescForm, LiftScheduleForm, LiftPlanForm, UserCreateForm
 import datetime
 
-
-# This will be a home page to redirect users that are not signed in
-# It will be more informational and aimed at the potential users
 def home(request):
     context = {
         'title':'Training Home'
@@ -26,7 +23,6 @@ def signup(request):
         'title':'Signup'
     }
     if request.method == 'POST':
-        print(request.POST)
         form = UserCreateForm(request.POST)
         if form.is_valid():
             form.save()
@@ -34,37 +30,11 @@ def signup(request):
             raw_password = form.cleaned_data.get("password2")
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            redirect('/ProfileSetup/' + request.POST.get('usertype'))
+            return redirect('/')
     else:
         form = UserCreateForm()
     context['form'] = form
     return render(request, 'training/signup.html', context)
-
-def profileset(request, usertype):
-    context = {
-        'title':'Profile',
-        'user': request.user,
-    }
-    if usertype=="Athlete":
-        if request.method == 'POST':
-            form = AthleteForm(request.POST)
-            if form.is_valid():
-                form.save()
-                return redirect('')
-        else:
-            form =AthleteForm()
-        context['form'] = form
-        return render(request, 'training/profile.html', context)
-    elif usertype=="Coach":
-        if request.method == 'POST':
-            form = CoachForm(request.POST)
-            if form.is_valid():
-                form.save()
-                return redirect('')
-        else:
-            form = CoachForm()
-        context['form'] = form
-        return render(request, 'training/profile.html', context)
 
 def about(request):
     context = {
@@ -75,25 +45,17 @@ def about(request):
 def scheduleAth(request, year, month, day):
     d = datetime.date(year,month,day)
     throwing = Throwing(ath_user=request.user, throw_date=d)
-    print(Throwing.objects.filter(ath_user_id=request.user.id, throw_date=d))
     if not request.user.is_authenticated:
         return redirect('/accounts/login/')
     elif not request.user.groups.filter(name='Athlete').exists():
         return redirect('/')
-    elif len(Throwing.objects.filter(ath_user_id=request.user.id, throw_date=d))!=0:
-        print(Throwing.objects.filter(ath_user_id=request.user.id, throw_date=d))
-        context = {
-            'throw_data': Throwing.objects.filter(ath_user_id=request.user.id, throw_date=d),
-            'athlete': request.user,
-            'throwSchedule': ThrowingSchedule.objects.get(ath_user_id = request.user.id, date = d),
-        }
-        return render(request, 'training/scheduleAth.html', context)
     elif ThrowingSchedule.objects.filter(ath_user_id = request.user.id, date = d).first()==None:
         return render(request, 'training/scheduleAth.html', {'athlete': request.user})
     else:
         throwSchedule = ThrowingSchedule.objects.get(ath_user_id = request.user.id, date = d)
         plan = ThrowPlans.objects.get(plan_name = throwSchedule.plan)
         context = {
+            'throw_data': Throwing.objects.filter(ath_user_id=request.user.id, throw_date=d),
             'date': datetime.date(year,month,day),
             'year': year,
             'month': month,
@@ -276,22 +238,3 @@ def editLiftplan(request):
 
     context['form'] = form
     return render(request, 'training/editLiftPlans.html', context)
-'''
-def editThrowing(request):
-    context = {
-        ## edit ##
-    }
-    if not request.user.is_authenticated:
-        return redirect('/accounts/login/')
-    else:
-        return render(request, 'training/editThrowing.html', context)
-
-def editLifting(request):
-    context = {
-        ## edit ##
-    }
-    if not request.user.is_authenticated:
-        return redirect('/accounts/login/')
-    else:
-        return render(request, 'training/editLifting.html', context)
-'''

@@ -1,21 +1,8 @@
 from django import forms
 from django.contrib.auth.models import User, Group
-from .models import Location, Position, Throwing, ThrowingDescription, ThrowingSchedule, User, ThrowPlans, LiftingDescription, LiftingSchedule, LiftPlans, Athlete, Coach
+from .models import Location, Position, Throwing, Lifting, ThrowingDescription, ThrowingSchedule, User, ThrowPlans, LiftingDescription, LiftingSchedule, LiftPlans, Athlete, Coach
 import datetime
 from django.contrib.auth.forms import UserCreationForm
-
-class CoachForm(forms.ModelForm):
-    location = forms.ModelChoiceField(queryset=Location.objects.all())
-    class Meta:
-        model = Coach
-        exclude = ('coach_user',)
-
-class AthleteForm(forms.ModelForm):
-    position = forms.ModelChoiceField(queryset=Position.objects.all())
-    location = forms.ModelChoiceField(queryset=Location.objects.all())
-    class Meta:
-        model = Athlete
-        exclude = ('ath_user',)
 
 class ThrowingForm(forms.ModelForm):
     throw_data = forms.JSONField()
@@ -23,6 +10,13 @@ class ThrowingForm(forms.ModelForm):
     class Meta:
         model = Throwing
         exclude = ('ath_user', 'throw_date')
+
+class LiftingForm(forms.ModelForm):
+    lift_data = forms.JSONField()
+
+    class Meta:
+        model = Lifting
+        exclude = ('ath_user', 'lift_date')
 
 class ThrowDescForm(forms.ModelForm):
     THROW_TYPE_CHOICES = [
