@@ -16,7 +16,7 @@ SECRET_KEY = '$yj@)1!hu-w14-kgqp-fd3@b)i@&%y7w()ux7lqhq-3z5u^1$('
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['athletetraining.herokuapp.com']
 
 
 # Application definition
