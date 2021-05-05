@@ -15,7 +15,7 @@ STATICFILES_DIRS = (
 SECRET_KEY = '$yj@)1!hu-w14-kgqp-fd3@b)i@&%y7w()ux7lqhq-3z5u^1$('
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['athletetraining.herokuapp.com']
 
