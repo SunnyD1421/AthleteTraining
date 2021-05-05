@@ -15,7 +15,7 @@ Before a program can begin to track their data, the athletes and coaches need to
 ###### Coach
 After all the athletes have signed up, a coach can do a few things:
 
-> Add new exercises to the set of preloaded ones
+> Add new exercises to the set of preloaded ones /n
 > Add throwing and lifting plans
 > Add a practice to the schedule for specific athletes
 ###### Athlete
