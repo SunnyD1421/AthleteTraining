@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login
 from django.http import HttpResponse
 from .models import ThrowingSchedule, LiftingSchedule, Athlete, ThrowPlans, Throwing, Lifting
 from .forms import ThrowingForm, ThrowDescForm, ThrowScheduleForm, ThrowPlanForm, LiftDescForm, LiftScheduleForm, LiftPlanForm, UserCreateForm
+from .utils import *
 import datetime
 
 def home(request):
@@ -69,6 +70,7 @@ def scheduleAththrow(request, year, month, day):
         form = ThrowingForm(request.POST, instance=throwing)
         if form.is_valid():
             form.save()
+            print(form.cleaned_data['throw_data'])
             return redirect("/athlete-dashboard/throwDay/"+str(year)+"/"+str(month)+"/"+str(day))
     else:
         form = ThrowingForm(instance=throwing)
@@ -110,7 +112,7 @@ def scheduleAthlift(request, year, month, day):
 
 def visualize(request):
     context = {
-        ## edit ##
+        
     }
     if not request.user.is_authenticated:
         return redirect('/accounts/login/')
@@ -118,8 +120,11 @@ def visualize(request):
         return render(request, 'training/visualize.html', context)
 
 def visualizeThrow(request):
+    data, keys = getChartDataAvgThrow(user=request.user)
     context = {
-        ## edit ##
+        'athlete': request.user,
+        'data': data,
+        'keys': keys,
     }
     if not request.user.is_authenticated:
         return redirect('/accounts/login/')
@@ -127,8 +132,11 @@ def visualizeThrow(request):
         return render(request, 'training/visualizeThrow.html', context)
 
 def visualizeLift(request):
+    data, keys = getChartDataAvgLift(user=request.user)
     context = {
-        ## edit ##
+        'athlete': request.user,
+        'data': data,
+        'keys': keys,
     }
     if not request.user.is_authenticated:
         return redirect('/accounts/login/')

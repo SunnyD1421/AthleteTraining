@@ -1,4 +1,63 @@
 {% extends "training/base.html" %}
 {% block content %}
-    <h1>Visualize Lifting Data</h1>
+<div class="row">
+    <div class="col-3"></div>
+        <div class="col-6">
+            <h1 style="text-align: center;">Visualize Throwing Data</h1>
+        </div>
+    <div class="col-3"></div>
+</div>
 {% endblock content %}
+
+{% block content2 %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col-6">
+            <div class="row">
+                <canvas id="myChart" width="400" height="400"></canvas>
+            </div>
+        </div>
+        <div class="col-3"></div>
+    </div>
+</div>
+<script>
+var ctx = document.getElementById('myChart');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: {{ keys|safe }},
+        datasets: [{
+            label: 'Average Weight Lifted',
+            data: {{ data|safe }},
+            backgroundColor: [
+                '#7C4DFF','#9575CD','#311B92',
+                '#536DFE','#7986CB','#1A237E',
+                '#448AFF','#64B5F6','#0D47A1',
+                '#40C4FF','#0288D1','#01579B',
+                '#18FFFF','#4DD0E1','#0097A7',
+                '#64FFDA','#80CBC4','#1DE9B6',
+                '#69F0AE','#81C784','#00E676',
+            ],
+            borderColor: [
+                '#7C4DFF','#9575CD','#311B92',
+                '#536DFE','#7986CB','#1A237E',
+                '#448AFF','#64B5F6','#0D47A1',
+                '#40C4FF','#0288D1','#01579B',
+                '#18FFFF','#4DD0E1','#0097A7',
+                '#64FFDA','#80CBC4','#1DE9B6',
+                '#69F0AE','#81C784','#00E676',           
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+</script>
+{% endblock %}
