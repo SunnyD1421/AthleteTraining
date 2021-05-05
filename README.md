@@ -15,8 +15,8 @@ Before a program can begin to track their data, the athletes and coaches need to
 ###### Coach
 After all the athletes have signed up, a coach can do a few things:
 
-> Add new exercises to the set of preloaded ones /n
-> Add throwing and lifting plans
+> Add new exercises to the set of preloaded ones\n
+> Add throwing and lifting plans\n
 > Add a practice to the schedule for specific athletes
 ###### Athlete
 After one of the coaches has scheduled a practice, the athlete can find this event on their dashboard. If there is throwing and lifting on the same day, they will be able to submit data for each practice separately.
