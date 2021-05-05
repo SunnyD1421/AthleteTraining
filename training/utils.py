@@ -3,21 +3,22 @@ import json
 
 def getChartDataAvgLift(user):
     data = []
-    queryset = Throwing.objects.filter(ath_user_id=user.id)
+    queryset = Lifting.objects.filter(ath_user_id=user.id)
 
-    for throw in queryset:
-        j = throw.throw_data
+    for lift in queryset:
+        j = lift.lift_data
         keys = list(j.keys())
-        for key in keys:
+        for i, key in enumerate(keys):
             data.append(0)
-            repList = j.get(key)
-            reps=0
+            setList = j.get(key)
+            sets=0
             weight=0
-            for rep in repList:
+            for rep in setList:
                 if rep!=0:
-                    reps+=1
+                    sets+=1
                     weight+=rep
-            data.append(weight/reps)
+            if sets!=0:
+                data[i] = (weight/sets)
     return data, keys
 
 def getChartDataAvgThrow(user):

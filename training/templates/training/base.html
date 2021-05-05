@@ -15,7 +15,6 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.13.0/polyfill.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.serializeJSON/3.2.1/jquery.serializejson.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script src="chartjs-plugin-colorschemes.js"></script>
         {% block head %}{% endblock %}
 
         {% if title %}
@@ -25,6 +24,20 @@
         {% endif %}
         
         <style>
+        .Absolute-Center {
+          margin: auto;
+          position: absolute;
+          top: 0; left: 0; bottom: 0; right: 0;
+        }
+
+        .Absolute-Center.is-Responsive {
+          width: 50%; 
+          height: 50%;
+          min-width: 400px;
+          max-width: 1600px;
+          padding: 40px;
+        }
+        
         .left {
           float: left;
         }
@@ -175,7 +188,6 @@
             <h2></h2>
             <p></p>
         </div>
-        
         {% block content %}{% endblock %}
         {% block content2 %}{% endblock %}
         {% block content3 %}{% endblock %}

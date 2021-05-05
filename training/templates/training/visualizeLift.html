@@ -1,4 +1,8 @@
 {% extends "training/base.html" %}
+{% block vis %}
+<a href="/visualize">Visualize</a>
+{% endblock %}
+
 {% block content %}
 <div class="row">
     <div class="col-3"></div>
@@ -15,14 +19,14 @@
         <div class="col-3"></div>
         <div class="col-6">
             <div class="row">
-                <canvas id="myChart" width="400" height="400"></canvas>
+                <canvas id="AvgChart" width="400" height="300"></canvas>
             </div>
         </div>
         <div class="col-3"></div>
     </div>
 </div>
 <script>
-var ctx = document.getElementById('myChart');
+var ctx = document.getElementById('AvgChart');
 var myChart = new Chart(ctx, {
     type: 'bar',
     data: {

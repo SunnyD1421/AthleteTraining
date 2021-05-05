@@ -8,23 +8,28 @@
 {% endblock content %}
 
 {% block content2 %} 
-<div class="dropdown">
-    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-      Edit Database
-    </button>
-    <div class="dropdown-menu">
-      <a class="dropdown-item" href="/coach-dashboard/addThrowExercise/">Add Throwing Exercise</a>
-      <a class="dropdown-item" href="/coach-dashboard/addThrowPlan/">Add Throwing Plans</a>
-      <a class="dropdown-item" href="/coach-dashboard/addThrowSchedule">Add Throwing Schedule</a>
-      <a class="dropdown-item" href="/coach-dashboard/addLiftingExercise">Add Lifting Exercise</a>
-      <a class="dropdown-item" href="/coach-dashboard/addLiftingPlan">Add Lifting Plans</a>
-      <a class="dropdown-item" href="/coach-dashboard/addLiftingSchedule">Add Lifting Schedule</a>
-     </div>
+<div class="row">
+  <div class="col-1"></div>
+  <div class="col-6">
+    <div class="dropdown">
+      <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+        Edit Database
+      </button>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="/coach-dashboard/addThrowExercise/">Add Throwing Exercise</a>
+        <a class="dropdown-item" href="/coach-dashboard/addThrowPlan/">Add Throwing Plans</a>
+        <a class="dropdown-item" href="/coach-dashboard/addThrowSchedule">Add Throwing Schedule</a>
+        <a class="dropdown-item" href="/coach-dashboard/addLiftExercise">Add Lifting Exercise</a>
+        <a class="dropdown-item" href="/coach-dashboard/addLiftPlan">Add Lifting Plans</a>
+        <a class="dropdown-item" href="/coach-dashboard/addLiftSchedule">Add Lifting Schedule</a>
+      </div>
+    </div>
   </div>
+</div>
 {% endblock content2 %}
 {% block edit-throwing-data %}
-
 {% endblock %}
+
 <!-- 
 NOTES:
 

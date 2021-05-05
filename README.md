@@ -10,4 +10,13 @@ The athletes will login and be able to find workouts with a calendar and be able
 ###### What is the purpose?
 Without this project, coaches may ask their players to write training data in journals or on other paper. My project not only provides a way for one coach to manage an entire team, but it also cuts down on the paper copies of workouts.
 
-###### Usage
+### Usage
+Before a program can begin to track their data, the athletes and coaches need to complete the signup form.
+###### Coach
+After all the athletes have signed up, a coach can do a few things:
+
+> Add new exercises to the set of preloaded ones
+> Add throwing and lifting plans
+> Add a practice to the schedule for specific athletes
+###### Athlete
+After one of the coaches has scheduled a practice, the athlete can find this event on their dashboard. If there is throwing and lifting on the same day, they will be able to submit data for each practice separately.

@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponse
-from .models import ThrowingSchedule, LiftingSchedule, Athlete, ThrowPlans, Throwing, Lifting
-from .forms import ThrowingForm, ThrowDescForm, ThrowScheduleForm, ThrowPlanForm, LiftDescForm, LiftScheduleForm, LiftPlanForm, UserCreateForm
+from .models import ThrowingSchedule, LiftingSchedule, Athlete, ThrowPlans, LiftPlans, Throwing, Lifting
+from .forms import ThrowingForm, LiftingForm, ThrowDescForm, ThrowScheduleForm, ThrowPlanForm, LiftDescForm, LiftScheduleForm, LiftPlanForm, UserCreateForm
 from .utils import *
 import datetime
 
@@ -201,6 +201,7 @@ def editThrowdesc(request):
         if form.is_valid():
             
             form.save()
+            return redirect("/coach-dashboard/addThrowExercise")
     else:
         form =ThrowDescForm()
 
@@ -220,6 +221,7 @@ def editThrowschedule(request):
         if form.is_valid():
             
             form.save()
+            return redirect("/coach-dashboard/addThrowSchedule")
     else:
         form =ThrowScheduleForm()
 
@@ -239,6 +241,7 @@ def editThrowplan(request):
         if form.is_valid():
             
             form.save()
+            return redirect("/coach-dashboard/addThrowPlan")
     else:
         form =ThrowPlanForm()
 
@@ -258,6 +261,7 @@ def editLiftdesc(request):
         if form.is_valid():
             
             form.save()
+            return redirect("/coach-dashboard/addLiftExercise")
     else:
         form =LiftDescForm()
 
@@ -277,6 +281,7 @@ def editLiftschedule(request):
         if form.is_valid():
             
             form.save()
+            return redirect("/coach-dashboard/addLiftSchedule")
     else:
         form =LiftScheduleForm()
 
@@ -296,6 +301,7 @@ def editLiftplan(request):
         if form.is_valid():
             
             form.save()
+            return redirect("/coach-dashboard/addLiftPlan")
     else:
         form =LiftPlanForm()
 
